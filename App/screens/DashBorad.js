@@ -40,6 +40,7 @@ export default function DashBorad() {
         <View style={{marginLeft: 30, marginTop: 35, marginBottom: 20}}>
           <WhishList />
         </View>
+        <View style={{height: 80}}></View>
       </ScrollView>
     </View>
   );

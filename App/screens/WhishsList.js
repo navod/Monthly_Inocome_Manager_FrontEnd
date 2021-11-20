@@ -3,10 +3,28 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import colors from '../constants/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 
-export default function WhishsList() {
+export default function WhishsList({navigation}) {
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 20,
+          paddingRight:10
+        }}>
+        <Text style={styles.headertxt}>Whishlist</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WishListStackScreen', {screen: 'Step1'})
+          }>
+          <Entypo name="plus" color="black" size={20} />
+        </TouchableOpacity>
+      </View>
+        
       <View style={styles.itemContainer}>
         <View style={styles.itemRow}>
           <Image
@@ -120,5 +138,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  headertxt: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 20,
   },
 });
