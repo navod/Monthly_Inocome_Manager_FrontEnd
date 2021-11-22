@@ -42,7 +42,7 @@ export const WishListStackScreen = () => {
         name="Step2"
         component={Step2}
         options={{
-          title: '2/5',
+          title: 'Step 2/5',
         }}
       />
       <WishlistStack.Screen

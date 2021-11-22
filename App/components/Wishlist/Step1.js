@@ -7,7 +7,8 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import colors from '../../constants/colors';
-export const Step1 = () => {
+
+export const Step1 = ({navigation}) => {
   const [foodIsEnable, setFoodIsEnable] = useState(false);
   const [gameIsEnable, setGameIsEnable] = useState(false);
   const [feeIsEnable, setFeeIsEnable] = useState(false);
@@ -137,7 +138,7 @@ export const Step1 = () => {
                 {foodIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -158,7 +159,7 @@ export const Step1 = () => {
                 {shoppingIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -178,7 +179,7 @@ export const Step1 = () => {
                 {feeIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -196,7 +197,7 @@ export const Step1 = () => {
                 {gameIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -216,7 +217,7 @@ export const Step1 = () => {
                 {sportsIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -236,7 +237,7 @@ export const Step1 = () => {
                 {travelIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -258,7 +259,7 @@ export const Step1 = () => {
                 {booksIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -274,7 +275,7 @@ export const Step1 = () => {
                 {giftIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -290,7 +291,7 @@ export const Step1 = () => {
                 {bikeIsEnable == true && (
                   <Ionicons
                     name="ios-checkmark-circle-sharp"
-                    color="green"
+                    color="#2CC244"
                     style={styles.check}
                     size={20}
                   />
@@ -325,7 +326,11 @@ export const Step1 = () => {
           bottom: 30,
           width: '100%',
         }}>
-        <TouchableOpacity style={styles.nxtbtn}>
+        <TouchableOpacity
+          style={styles.nxtbtn}
+          onPress={() =>
+            navigation.navigate('WishListStackScreen', {screen: 'Step2'})
+          }>
           <Text style={{color: 'white'}}>Next</Text>
         </TouchableOpacity>
       </View>
