@@ -1,10 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
+import {useState} from 'react/cjs/react.development';
+import {WhishList} from '../../../src/SaveWishlist';
 import colors from '../../constants/colors';
 import {BlueContainer} from './BlueContainer';
 
-export const Step2 = ({navigation}) => {
+export const Step2 = ({route, navigation}) => {
+  const [amount, setAmount] = useState('');
+
   return (
     <View style={{flex: 1}}>
       <BlueContainer />
@@ -25,6 +29,8 @@ export const Step2 = ({navigation}) => {
               keyboardType="numeric"
               underlineColorAndroid="white"
               placeholderTextColor="gray"
+              value={amount}
+              onChangeText={setAmount}
             />
           </View>
         </View>
@@ -36,13 +42,23 @@ export const Step2 = ({navigation}) => {
           bottom: 30,
           width: '100%',
         }}>
-        <TouchableOpacity
-          style={styles.nxtbtn}
-          onPress={() =>
-            navigation.navigate('WishListStackScreen', {screen: 'Step3'})
-          }>
-          <Text style={{color: 'white'}}>Next</Text>
-        </TouchableOpacity>
+        {amount === '' || Number(amount) <= 0 ? null : (
+          <TouchableOpacity
+            style={styles.nxtbtn}
+            onPress={
+              () =>
+                navigation.navigate('WishListStackScreen', {
+                  screen: 'Step3',
+                  params: {
+                    ...route.params,
+                    saveTo: 1000,
+                  },
+                })
+              // saveValue()
+            }>
+            <Text style={{color: 'white'}}>Next</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -78,6 +94,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     padding: 10,
     marginTop: 50,
+    color: 'black',
   },
   nxtbtn: {
     alignItems: 'center',

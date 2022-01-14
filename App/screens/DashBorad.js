@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,8 +12,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MonthlySpends} from '../components/Dashboard/MonthlySpends';
 import {SpendList} from '../components/Dashboard/SpendList';
 import {WhishList} from '../components/Dashboard/WhishList';
+import {connect} from 'react-redux';
+import {getWhishlistDetails} from '../store/actions/Whishlist/whishlist';
 
-export default function DashBorad() {
+const DashBorad = props => {
+  useEffect(() => {
+    props.onGetAllWhishlistDetail(props.userId);
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -38,13 +45,28 @@ export default function DashBorad() {
         </View>
 
         <View style={{marginLeft: 30, marginTop: 35, marginBottom: 20}}>
-          <WhishList />
+          <WhishList data={props.whishlistDetails} />
         </View>
         <View style={{height: 80}}></View>
       </ScrollView>
     </View>
   );
-}
+};
+
+const mapStateToProps = state => {
+  return {
+    userId: state.auth.userId,
+    WhishList: state.whishlist.whishlistDetails,
+  };
+};
+
+const mapDispatchToProps = disptach => {
+  return {
+    onGetAllWhishlistDetail: userId => disptach(getWhishlistDetails(userId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashBorad);
 
 const styles = StyleSheet.create({
   container: {

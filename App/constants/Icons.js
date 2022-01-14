@@ -1,0 +1,9 @@
+export const Food = 'Food';
+export const Shopping = 'Shopping';
+export const Fee = 'Fees';
+export const Games = 'Game';
+export const Sports = 'Sport';
+export const Travel = 'Travel';
+export const Book = 'Book';
+export const Gifts = 'Gift';
+export const Bike = 'Bike';

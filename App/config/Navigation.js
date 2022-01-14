@@ -7,21 +7,21 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {BottomTabScreen} from './BottomTab';
-import WhishsList from '../screens/WhishsList';
+import WhishsList from '../screens/whishlist/WhishsList';
 import {WishListStackScreen} from './WhishListStepStack';
+import CreateExpends from '../screens/CreateExpends';
+import Login from '../screens/Login';
+import SignUp from '../screens/SignUp';
 
 const ModalStack = createStackNavigator();
 const ModalStackScreen = () => (
-  <ModalStack.Navigator>
-    <ModalStack.Screen
-      name="BottomTabScreen"
-      component={BottomTabScreen}
-      options={{headerShown: false}}
-    />
+  <ModalStack.Navigator screenOptions={{headerShown: false}}>
+    <ModalStack.Screen name="Login" component={Login} />
+    <ModalStack.Screen name="SignUp" component={SignUp} />
+    <ModalStack.Screen name="BottomTabScreen" component={BottomTabScreen} />
     <ModalStack.Screen
       name="WishListStackScreen"
       component={WishListStackScreen}
-      options={{headerShown: false}}
     />
   </ModalStack.Navigator>
 );

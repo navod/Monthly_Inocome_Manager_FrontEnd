@@ -6,10 +6,12 @@ import {Step1} from '../components/Wishlist/Step1';
 import {Step2} from '../components/Wishlist/Step2';
 import {Step3} from '../components/Wishlist/Step3';
 import {Step4} from '../components/Wishlist/Step4';
-import {Step5} from '../components/Wishlist/Step5';
+import Step5 from '../components/Wishlist/Step5';
 import colors from '../constants/colors';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useNavigation} from '@react-navigation/core';
+import {Step6} from '../components/Wishlist/Step6';
+
 const WishlistStack = createStackNavigator();
 
 export const WishListStackScreen = () => {
@@ -49,19 +51,26 @@ export const WishListStackScreen = () => {
         name="Step3"
         component={Step3}
         options={{
-          title: 'Step 3/5',
+          title: 'Step 2/5',
         }}
       />
       <WishlistStack.Screen
         name="Step4"
         component={Step4}
         options={{
-          title: 'Step 4/5',
+          title: 'Step 3/5',
         }}
       />
       <WishlistStack.Screen
         name="Step5"
         component={Step5}
+        options={{
+          title: 'Step 4/5',
+        }}
+      />
+      <WishlistStack.Screen
+        name="Step6"
+        component={Step6}
         options={{
           title: 'Step 5/5',
         }}

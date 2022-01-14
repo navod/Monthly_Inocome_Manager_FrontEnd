@@ -5,4 +5,6 @@ export default {
   yellow: '#C7BC2E',
   purple: '#8A6BE0',
   pink: '#E276C2',
+  lightGray: '#D7DDE9',
+  darkGray: '#403F3F',
 };

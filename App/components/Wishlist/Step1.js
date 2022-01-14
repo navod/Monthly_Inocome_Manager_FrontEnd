@@ -4,9 +4,9 @@ import {BlueContainer} from './BlueContainer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import colors from '../../constants/colors';
+import {format} from 'date-fns';
 
 export const Step1 = ({navigation}) => {
   const [foodIsEnable, setFoodIsEnable] = useState(false);
@@ -19,9 +19,14 @@ export const Step1 = ({navigation}) => {
   const [bikeIsEnable, setBikeIsEnable] = useState(false);
   const [booksIsEnable, setBookIsEnable] = useState(false);
 
+  const [category, setCategory] = useState(null);
+
   const checkEnable = number => {
     if (number === 1) {
       setFoodIsEnable(!foodIsEnable);
+      !foodIsEnable
+        ? setCategory({category: 'Food', color: '#f39c12'})
+        : setCategory(null);
       setGameIsEnable(false);
       setFeeIsEnable(false);
       setShoppingIsEnable(false);
@@ -36,6 +41,9 @@ export const Step1 = ({navigation}) => {
       setGameIsEnable(false);
       setFeeIsEnable(false);
       setShoppingIsEnable(!shoppingIsEnable);
+      !shoppingIsEnable
+        ? setCategory({category: 'Shopping', color: '#29C999'})
+        : setCategory(null);
       setSportsIsEnable(false);
       setTravelIsEnable(false);
       setGiftIsEnable(false);
@@ -45,6 +53,9 @@ export const Step1 = ({navigation}) => {
       setFoodIsEnable(false);
       setGameIsEnable(false);
       setFeeIsEnable(!feeIsEnable);
+      !feeIsEnable
+        ? setCategory({category: 'Fees', color: '#32AFFF'})
+        : setCategory(null);
       setShoppingIsEnable(false);
       setShoppingIsEnable(false);
       setSportsIsEnable(false);
@@ -55,6 +66,9 @@ export const Step1 = ({navigation}) => {
     } else if (number === 4) {
       setFoodIsEnable(false);
       setGameIsEnable(!gameIsEnable);
+      !gameIsEnable
+        ? setCategory({category: 'Game', color: '#FF5E5B'})
+        : setCategory(null);
       setFeeIsEnable(false);
       setShoppingIsEnable(false);
       setShoppingIsEnable(false);
@@ -70,6 +84,9 @@ export const Step1 = ({navigation}) => {
       setShoppingIsEnable(false);
       setShoppingIsEnable(false);
       setSportsIsEnable(!sportsIsEnable);
+      !sportsIsEnable
+        ? setCategory({category: 'Sport', color: '#C7BC2E'})
+        : setCategory(null);
       setTravelIsEnable(false);
       setGiftIsEnable(false);
       setBikeIsEnable(false);
@@ -82,6 +99,9 @@ export const Step1 = ({navigation}) => {
       setShoppingIsEnable(false);
       setSportsIsEnable(false);
       setTravelIsEnable(!travelIsEnable);
+      !travelIsEnable
+        ? setCategory({category: 'Travel', color: '#E276C2'})
+        : setCategory(null);
       setGiftIsEnable(false);
       setBikeIsEnable(false);
       setBookIsEnable(false);
@@ -96,6 +116,9 @@ export const Step1 = ({navigation}) => {
       setGiftIsEnable(false);
       setBikeIsEnable(false);
       setBookIsEnable(!booksIsEnable);
+      !booksIsEnable
+        ? setCategory({category: 'Book', color: '#8A6BE0'})
+        : setCategory(null);
     } else if (number === 8) {
       setFoodIsEnable(false);
       setGameIsEnable(false);
@@ -105,6 +128,9 @@ export const Step1 = ({navigation}) => {
       setSportsIsEnable(false);
       setTravelIsEnable(false);
       setGiftIsEnable(!giftIsEnable);
+      !giftIsEnable
+        ? setCategory({category: 'Gift', color: '#f1c40f'})
+        : setCategory(null);
       setBikeIsEnable(false);
       setBookIsEnable(false);
     } else if (number === 9) {
@@ -117,6 +143,9 @@ export const Step1 = ({navigation}) => {
       setTravelIsEnable(false);
       setGiftIsEnable(false);
       setBikeIsEnable(!bikeIsEnable);
+      !bikeIsEnable
+        ? setCategory({category: 'Bike', color: '#4b4b4b'})
+        : setCategory(null);
       setBookIsEnable(false);
     }
   };
@@ -326,13 +355,26 @@ export const Step1 = ({navigation}) => {
           bottom: 30,
           width: '100%',
         }}>
-        <TouchableOpacity
-          style={styles.nxtbtn}
-          onPress={() =>
-            navigation.navigate('WishListStackScreen', {screen: 'Step2'})
-          }>
-          <Text style={{color: 'white'}}>Next</Text>
-        </TouchableOpacity>
+        {category && (
+          <TouchableOpacity
+            style={styles.nxtbtn}
+            onPress={() =>
+              navigation.navigate('WishListStackScreen', {
+                screen: 'Step2',
+                params: {
+                  category,
+                  saveTo: 1000,
+                  saveType: null,
+                  savedDate: format(new Date(), 'dd-MM-yyyy'),
+                  userId: 'U0001',
+                  savedAmount: 0,
+                  savedDate: format(new Date(), 'dd-MM-yyyy'),
+                },
+              })
+            }>
+            <Text style={{color: 'white'}}>Next</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

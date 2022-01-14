@@ -21,7 +21,7 @@ import CreateExpends from '../screens/CreateExpends';
 
 import Charts from '../screens/Charts';
 import colors from '../constants/colors';
-import WhishsList from '../screens/WhishsList';
+import WhishsList from '../screens/whishlist/WhishsList';
 
 let tabOffSet = 0;
 const Tab = createBottomTabNavigator();
@@ -41,6 +41,7 @@ export const BottomTabScreen = () => {
     <View style={{flex: 1}}>
       <Tab.Navigator
         screenOptions={{
+          tabBarHideOnKeyboard: true,
           tabBarShowLabel: false,
           tabBarStyle: styles.tabBar,
         }}>
@@ -97,6 +98,7 @@ export const BottomTabScreen = () => {
           options={{
             headerShown: false,
             tabBarItemStyle: styles.tabBarItemStyle,
+
             tabBarIcon: ({focused}) => (
               <Image
                 source={require('../assets/images/plus.png')}
@@ -104,6 +106,14 @@ export const BottomTabScreen = () => {
               />
             ),
           }}
+          listeners={({navigation, route}) => ({
+            tabPress: e => {
+              Animated.spring(tabOffSet, {
+                toValue: getWidth() * 2,
+                useNativeDriver: true,
+              }).start();
+            },
+          })}
         />
 
         <Tab.Screen

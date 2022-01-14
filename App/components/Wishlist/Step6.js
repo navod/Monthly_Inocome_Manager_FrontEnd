@@ -1,42 +1,67 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import colors from '../../constants/colors';
 import {BlueContainer} from './BlueContainer';
-import RNSpeedometer from 'react-native-speedometer';
+import LottieView from 'lottie-react-native';
 
-export const Step3 = ({route, navigation}) => {
+export const Step6 = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <BlueContainer />
+
       <View style={{paddingHorizontal: 30}}>
-        <View style={styles.container}>
-          <Text style={styles.headerTxt}>
-            If you add it, how it depend on your income ?
-          </Text>
+        <View style={[styles.container, {alignItems: 'center'}]}>
+          <Image
+            source={require('../../assets/images/done.png')}
+            style={styles.img}
+          />
+
+          <LottieView
+            source={require('../../assets/animations/done.json')}
+            autoPlay
+            loop
+            style={{
+              zIndex: 2,
+              position: 'absolute',
+              width: 120,
+              height: 120,
+              bottom: 15,
+              right: 15,
+            }}
+          />
+          <Text style={styles.headerTxt}>Done !</Text>
           <Text
             style={[
               styles.headerTxt,
               {
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: '400',
                 marginTop: 20,
-                paddingHorizontal: 30,
                 color: 'black',
-                textAlign: 'left',
               },
             ]}>
-            Risks,
+            You will be completing your whishlist in next 25 days
           </Text>
-          <Text>1).</Text>
-          <Text>2).</Text>
-          <Text>3).</Text>
-          <Text>4).</Text>
-          <Text>5).</Text>
-          <Text>6).</Text>
-
-          <RNSpeedometer value={120} size={200} />
         </View>
       </View>
+
+      <Text
+        onPress={() => navigation.navigate('Step1')}
+        style={{
+          fontWeight: 'bold',
+          textAlign: 'center',
+          color: colors.blue,
+          marginTop: 40,
+        }}>
+        Edit Whishlist
+      </Text>
 
       <View
         style={{
@@ -47,19 +72,15 @@ export const Step3 = ({route, navigation}) => {
         }}>
         <TouchableOpacity
           style={styles.nxtbtn}
-          onPress={() =>
-            navigation.navigate('WishListStackScreen', {
-              screen: 'Step4',
-              params: route.params,
-            })
-          }>
-          <Text style={{color: 'white'}}>Next</Text>
+          onPress={() => navigation.navigate('WhishList')}>
+          <Text style={{color: 'white'}}>See whishlist</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
+const screen = Dimensions.get('screen');
 const styles = StyleSheet.create({
   container: {
     marginTop: -150,
@@ -75,7 +96,7 @@ const styles = StyleSheet.create({
 
     elevation: 7,
     paddingHorizontal: 20,
-    paddingBottom: 80,
+    paddingBottom: 20,
   },
   headerTxt: {
     color: 'black',
@@ -114,14 +135,9 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 10,
   },
-  check: {
-    position: 'absolute',
-    right: -5,
-    zIndex: 1,
-    borderRadius: 100,
-    paddingLeft: 3,
-    paddingTop: 1,
-    backgroundColor: 'white',
-    top: -4,
+  img: {
+    width: '100%',
+    height: screen.height / 3,
+    resizeMode: 'contain',
   },
 });

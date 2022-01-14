@@ -1,42 +1,55 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import {BlueContainer} from './BlueContainer';
-import LottieView from 'lottie-react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import api from '../../util/Api';
+import {saveWhishlist} from '../../store/actions/Whishlist/whishlist';
+import {connect} from 'react-redux';
+const Step5 = props => {
+  const [isFair, setIsFair] = useState(false);
+  const [isGood, setIsGood] = useState(false);
+  const [isExcellent, setIsExcellent] = useState(false);
 
-export const Step5 = ({navigation}) => {
+  const checkSave = number => {
+    if (number == 1) {
+      setIsFair(!isFair);
+      setIsGood(false);
+      setIsExcellent(false);
+    }
+    if (number == 2) {
+      setIsGood(!isGood);
+      setIsFair(false);
+      setIsExcellent(false);
+    }
+    if (number == 3) {
+      setIsExcellent(!isExcellent);
+      setIsGood(false);
+      setIsFair(false);
+    }
+  };
+
+  const {params} = props.route;
+
+
+  const saveValue = () => {
+    props.onSaveWhishlist(
+      params.saveTo,
+      params.category.category,
+      params.category.color,
+      params.saveType,
+      params.userId,
+      params.savedDate,
+      params.savedAmount,
+      params.savedDate,
+    );
+  };
   return (
     <View style={{flex: 1}}>
       <BlueContainer />
-
       <View style={{paddingHorizontal: 30}}>
-        <View style={[styles.container, {alignItems: 'center'}]}>
-          <Image
-            source={require('../../assets/images/done.png')}
-            style={styles.img}
-          />
-
-          <LottieView
-            source={require('../../assets/animations/done.json')}
-            autoPlay
-            loop
-            style={{
-              zIndex: 2,
-              position: 'absolute',
-              width: 120,
-              height: 120,
-              bottom: 15,
-              right: 15,
-            }}
-          />
-          <Text style={styles.headerTxt}>Done !</Text>
+        <View style={styles.container}>
+          <Text style={styles.headerTxt}>Select Amount</Text>
           <Text
             style={[
               styles.headerTxt,
@@ -44,24 +57,65 @@ export const Step5 = ({navigation}) => {
                 fontSize: 14,
                 fontWeight: '400',
                 marginTop: 20,
+                paddingHorizontal: 30,
                 color: 'black',
               },
             ]}>
-            You will be completing your whishlist in next 25 days
+            How much can you save for each month for this whishlist?
           </Text>
+          <Text style={{color: 'gray', marginTop: 30}}>Suggested for you</Text>
+          <View style={styles.row}>
+            {isFair == true && (
+              <Ionicons
+                name="ios-checkmark-circle-sharp"
+                color="#2CC244"
+                style={styles.check}
+                size={20}
+              />
+            )}
+            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
+              Fair
+            </Text>
+
+            <TouchableOpacity style={styles.btn} onPress={() => checkSave(1)}>
+              <Text style={{color: 'black'}}>Rs 1500(5%) income</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            {isGood == true && (
+              <Ionicons
+                name="ios-checkmark-circle-sharp"
+                color="#2CC244"
+                style={styles.check}
+                size={20}
+              />
+            )}
+            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
+              Good
+            </Text>
+            <TouchableOpacity style={styles.btn} onPress={() => checkSave(2)}>
+              <Text style={{color: 'black'}}>Rs 3000(10%) income</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.row, {marginBottom: 10}]}>
+            {isExcellent == true && (
+              <Ionicons
+                name="ios-checkmark-circle-sharp"
+                color="#2CC244"
+                style={styles.check}
+                size={20}
+              />
+            )}
+
+            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
+              Great
+            </Text>
+            <TouchableOpacity style={styles.btn} onPress={() => checkSave(3)}>
+              <Text style={{color: 'black'}}>Rs 4500(15%) income</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-
-      <Text
-        onPress={() => navigation.navigate('Step1')}
-        style={{
-          fontWeight: 'bold',
-          textAlign: 'center',
-          color: colors.blue,
-          marginTop: 40,
-        }}>
-        Edit Whishlist
-      </Text>
 
       <View
         style={{
@@ -72,15 +126,46 @@ export const Step5 = ({navigation}) => {
         }}>
         <TouchableOpacity
           style={styles.nxtbtn}
-          onPress={() => navigation.navigate('WhishList')}>
-          <Text style={{color: 'white'}}>See whishlist</Text>
+          onPress={() => {
+            props.navigation.navigate('WishListStackScreen', {
+              screen: 'Step6',
+            });
+            saveValue();
+          }}>
+          <Text style={{color: 'white'}}>Done</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const screen = Dimensions.get('screen');
+const mapDispatchToProps = dispatch => {
+  return {
+    onSaveWhishlist: (
+      saveTo,
+      description,
+      color,
+      saveType,
+      userId,
+      savedDate,
+      savedAmount,
+    ) =>
+      dispatch(
+        saveWhishlist(
+          saveTo,
+          description,
+          color,
+          saveType,
+          userId,
+          savedDate,
+          savedAmount,
+        ),
+      ),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Step5);
+
 const styles = StyleSheet.create({
   container: {
     marginTop: -150,
@@ -135,9 +220,14 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 10,
   },
-  img: {
-    width: '100%',
-    height: screen.height / 3,
-    resizeMode: 'contain',
+  check: {
+    position: 'absolute',
+    right: -5,
+    zIndex: 1,
+    borderRadius: 100,
+    paddingLeft: 3,
+    paddingTop: 1,
+    backgroundColor: 'white',
+    top: -4,
   },
 });

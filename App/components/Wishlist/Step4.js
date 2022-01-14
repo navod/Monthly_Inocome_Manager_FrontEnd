@@ -2,103 +2,38 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import {BlueContainer} from './BlueContainer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export const Step4 = ({navigation}) => {
-  const [isFair, setIsFair] = useState(false);
-  const [isGood, setIsGood] = useState(false);
-  const [isExcellent, setIsExcellent] = useState(false);
+export const Step4 = ({route, navigation}) => {
+  const [saveType, setSaveType] = useState(null);
 
-  const checkSave = number => {
-    if (number == 1) {
-      setIsFair(!isFair);
-      setIsGood(false);
-      setIsExcellent(false);
-    }
-    if (number == 2) {
-      setIsGood(!isGood);
-      setIsFair(false);
-      setIsExcellent(false);
-    }
-    if (number == 3) {
-      setIsExcellent(!isExcellent);
-      setIsGood(false);
-      setIsFair(false);
-    }
-  };
   return (
     <View style={{flex: 1}}>
       <BlueContainer />
       <View style={{paddingHorizontal: 30}}>
         <View style={styles.container}>
-          <Text style={styles.headerTxt}>Select Amount</Text>
+          <Text style={styles.headerTxt}>Select Save Type</Text>
           <Text
             style={[
               styles.headerTxt,
-              {
-                fontSize: 14,
-                fontWeight: '400',
-                marginTop: 20,
-                paddingHorizontal: 30,
-                color: 'black',
-              },
+              {fontSize: 14, fontWeight: '400', marginTop: 20},
             ]}>
-            How much can you save for each month for this whishlist?
+            Which type of saving is?
           </Text>
-          <Text style={{color: 'gray', marginTop: 30}}>Suggested for you</Text>
+          {saveType && <Text style={styles.saveType}>{saveType}</Text>}
           <View style={styles.row}>
-            {isFair == true && (
-              <Ionicons
-                name="ios-checkmark-circle-sharp"
-                color="#2CC244"
-                style={styles.check}
-                size={20}
-              />
-            )}
-            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
-              Fair
-            </Text>
-
-            <TouchableOpacity style={styles.btn} onPress={() => checkSave(1)}>
-              <Text style={{color: 'black'}}>Rs 1500(5%) income</Text>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => setSaveType('Weekly')}>
+              <Text style={{color: colors.blue}}>Weekly</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            {isGood == true && (
-              <Ionicons
-                name="ios-checkmark-circle-sharp"
-                color="#2CC244"
-                style={styles.check}
-                size={20}
-              />
-            )}
-            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
-              Good
-            </Text>
-            <TouchableOpacity style={styles.btn} onPress={() => checkSave(2)}>
-              <Text style={{color: 'black'}}>Rs 3000(10%) income</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.row, {marginBottom: 10}]}>
-            {isExcellent == true && (
-              <Ionicons
-                name="ios-checkmark-circle-sharp"
-                color="#2CC244"
-                style={styles.check}
-                size={20}
-              />
-            )}
-
-            <Text style={{color: 'black', fontWeight: '800', fontSize: 15}}>
-              Great
-            </Text>
-            <TouchableOpacity style={styles.btn} onPress={() => checkSave(3)}>
-              <Text style={{color: 'black'}}>Rs 4500(15%) income</Text>
+            <TouchableOpacity
+              onPress={() => setSaveType('Monthly')}
+              style={[styles.btn, {backgroundColor: colors.blue}]}>
+              <Text style={{color: 'white'}}>Monthly</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-
       <View
         style={{
           paddingHorizontal: 30,
@@ -109,9 +44,15 @@ export const Step4 = ({navigation}) => {
         <TouchableOpacity
           style={styles.nxtbtn}
           onPress={() =>
-            navigation.navigate('WishListStackScreen', {screen: 'Step5'})
+            navigation.navigate('WishListStackScreen', {
+              screen: 'Step5',
+              params: {
+                ...route.params,
+                saveType: saveType,
+              },
+            })
           }>
-          <Text style={{color: 'white'}}>Done</Text>
+          <Text style={{color: 'white'}}>Next</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -157,29 +98,25 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   row: {
-    marginTop: 20,
+    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
-
-    alignItems: 'center',
+    padding: 1,
   },
   btn: {
-    borderRadius: 15,
-    borderColor: 'gray',
+    borderRadius: 10,
+    borderColor: colors.blue,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '80%',
+    width: '45%',
     padding: 10,
   },
-  check: {
-    position: 'absolute',
-    right: -5,
-    zIndex: 1,
-    borderRadius: 100,
-    paddingLeft: 3,
-    paddingTop: 1,
-    backgroundColor: 'white',
-    top: -4,
+  saveType: {
+    color: colors.blue,
+    textAlign: 'center',
+    marginTop: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
